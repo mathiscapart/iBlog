@@ -1,17 +1,16 @@
-FROM node:23.11-alpine3.20
+FROM node:23.11
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/81b1373f17855a4dc21156cfe1694c31d7d1792e/wait-for-it.sh /usr/bin/wait-for-it
+RUN chmod +x /usr/bin/wait-for-it
 
-WORKDIR /home/node/app
+WORKDIR /node/app
 
 COPY package.json ./
 
-USER node
-
 RUN npm install
 
-COPY --chown=node:node . .
+COPY . .
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "wait-for-it", "database:5432", "--", "npm", "start" ]

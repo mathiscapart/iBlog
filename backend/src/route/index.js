@@ -15,7 +15,7 @@ const myToken = function (req, res, next) {
     next()
 }
 
-const categorieRouter = require('./categorieRoute');
+const categoryRouter = require('./categoryRoute');
 const userRouter = require('./userRoute');
 const articleRouter = require('./articleRoute');
 
@@ -23,7 +23,7 @@ app.use(myToken)
 app.use(bodyParser.json());
 app.use('/user', userRouter);
 app.use('/article', articleRouter);
-app.use('/categorie', categorieRouter);
+app.use('/category', categoryRouter);
 app.get('/error', () => {
     throw new Error('This is a forced error!');
 });

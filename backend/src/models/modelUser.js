@@ -2,7 +2,7 @@ const {DataTypes} = require("sequelize");
 const bcrypt = require("bcrypt");
 
 module.exports = (sequelize) => {
-    sequelize.define('User', {
+    return sequelize.define('User', {
         firstName: {
             type: DataTypes.STRING,
             allowNull: false,

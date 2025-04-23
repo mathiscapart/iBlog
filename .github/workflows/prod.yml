@@ -1,0 +1,17 @@
+name: "Mise en production"
+on:
+  pull_request:
+    branches:
+      - ${{ github.event.repository.default_branch }}
+  push:
+    branches:
+      - ${{ github.event.repository.default_branch }}
+
+jobs:
+  linter:
+    runs-on: runner
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 10.9.2

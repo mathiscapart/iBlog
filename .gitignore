@@ -1,3 +1,4 @@
 .idea
 backend/.env
 backend/node_modules
+bakcend/package-lock.json
