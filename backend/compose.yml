@@ -1,6 +1,7 @@
 services:
   database:
     image: 'postgres:17.4-alpine3.20'
+    container_name: database
     ports:
       - "5432:5432"
     volumes:
@@ -13,6 +14,7 @@ services:
       context: .
       args:
         VERSION: 1.0
+    container_name: backend
     ports:
       - "8080:8080"
 
