@@ -1,5 +1,5 @@
 const sequelize = require('./models/index');
-const app = require('./route')
+const app = require('./models')
 const port = 3000;
 
 async function assertDatabaseConnectionOk() {
