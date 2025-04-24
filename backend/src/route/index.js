@@ -1,26 +1,51 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 const app = express();
+const jwt = require('jsonwebtoken');
+const { models } = require('../models');
 const errorMiddleware = require('../error/errorMiddleware');
+
+app.use(bodyParser.json());
+
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const user = await models.User.findOne({ where: { email } });
+
+    if (!user) return res.status(404).send('Utilisateur non trouvé');
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) return res.status(401).send('Mot de passe invalide');
+
+    const token = jwt.sign(
+        { id: user.id, role: user.role },
+        process.env.JWT_SECRET || 'supersecret123',
+        { expiresIn: '1h' }
+    );
+
+    res.json({ token });
+});
 
 const myToken = function (req, res, next) {
     const authHeader = req.headers.authorization;
-
     if (!authHeader) return res.status(401).send('Token non fourni');
 
-    const parts = authHeader.split(' ');
-    const [ , token] = parts;
+    const token = authHeader.split(' ')[1];
 
-    if (token !== process.env.TOKEN) return res.status(401).send('Token non valide');
-    next()
-}
+    try {
+        req.user = jwt.verify(token, process.env.JWT_SECRET || 'supersecret123');
+        next();
+    } catch (err) {
+        return res.status(401).send('Token non valide');
+    }
+};
 
 const categoryRouter = require('./categoryRoute');
 const userRouter = require('./userRoute');
 const articleRouter = require('./articleRoute');
 
 app.use(myToken)
-app.use(bodyParser.json());
+
 app.use('/user', userRouter);
 app.use('/article', articleRouter);
 app.use('/category', categoryRouter);
