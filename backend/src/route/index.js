@@ -44,9 +44,10 @@ const categoryRouter = require('./categoryRoute');
 const userRouter = require('./userRoute');
 const articleRouter = require('./articleRoute');
 
+app.use('/user', userRouter);
+
 app.use(myToken)
 
-app.use('/user', userRouter);
 app.use('/article', articleRouter);
 app.use('/category', categoryRouter);
 app.get('/error', () => {
