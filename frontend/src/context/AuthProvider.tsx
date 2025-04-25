@@ -25,10 +25,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }, []);
 
-    const login = (token: string) => {
+    const login = (user: User, token: string) => {
         localStorage.setItem('token', token);
-        const decoded: User = jwtDecode(token);
-        setUser(decoded);
+        setUser(user); // Stocke l'objet user directement
     };
 
     const logout = () => {
@@ -42,5 +41,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         </AuthContext.Provider>
     );
 };
+
 
 export const useAuth = () => useContext(AuthContext);
