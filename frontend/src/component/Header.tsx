@@ -18,13 +18,13 @@ export default function Header() {
                     </Typography>
                     <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/home"}>Accueil</NavLink>
                     <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/articles"}>Articles</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/category"}>Category</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/category"}>Catégories</NavLink>
                     { !user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
-                              to={"/login"}>Login</NavLink> : <></>}
+                              to={"/login"}>Connexion</NavLink> : <></>}
                     { !user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
-                                       to={"/register"}>Register</NavLink> : <></>}
+                                       to={"/register"}>Inscription</NavLink> : <></>}
                     { user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
-                              to={"/logout"}>Logout</NavLink> : <></>}
+                              to={"/logout"}>Déconnexion</NavLink> : <></>}
                     {user?.role ? <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/admin"}>Admin</NavLink> : <></>}
                 </Toolbar>
             </AppBar>

@@ -32,7 +32,7 @@ function Categorys() {
 
     return (
         <div>
-            <Typography variant={"h3"} color={"primary"} style={{marginTop: 50}}>Category</Typography>
+            <Typography variant={"h3"} color={"primary"} style={{marginTop: 50}}>Catégories</Typography>
             <Grid container style={{marginBottom: "5%"}} rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }} direction="row"
                   sx={{
                       justifyContent: "space-between",

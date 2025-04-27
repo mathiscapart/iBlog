@@ -3,12 +3,12 @@ import Categorys from "./Categorys.tsx";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Typography from "@mui/material/Typography";
+import {Avatar, Card, CardContent, CardHeader, CardMedia, Grid, IconButton} from "@mui/material";
 import {useEffect, useState} from "react";
 import type {Article} from "../interface/Article.tsx";
 import fetchArticles from "../function/fetchArtciles.ts";
-import { Card, Box  } from "@mui/material";
-import AspectRatio from '@mui/joy/AspectRatio';
-import Carousel from "react-material-ui-carousel";
+import AddIcon from '@mui/icons-material/Add';
+import {Link} from "react-router-dom";
 
 
 function Home(){
@@ -55,36 +55,48 @@ function Home(){
                         <Typography variant={"h6"}>Bienvenue, {user.firstName} !</Typography>
                     </div>
 
-                    <Carousel
-                        animation="slide"
-                        indicators={true}
-                        navButtonsAlwaysVisible={true}
-                        navButtonsAlwaysInvisible={false}
-                        cycleNavigation={true}
-                        fullHeightHover={false}
-                        sx={{
-                            maxWidth: "600px",
-                            flexGrow: 1,
-                            margin: "auto",
-                            mt: 5,
-                        }}
+                    <Grid container style={{marginLeft:"10%", marginRight:"10%"}} rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }} direction="row"
+                          sx={{
+                              justifyContent: "space-between",
+                              alignItems: "center",}}
                     >
                         {articles.map((article) => (
-                            <Card key={article.title} variant="outlined" style={{ display: 'flex', marginBottom: '20px' }}>
-                                <AspectRatio ratio="1" sx={{ minWidth: 60 }}>
-                                    <img
-                                        srcSet={`${article.img}?h=120&fit=crop&auto=format&dpr=2 2x`}
-                                        src={`${article.img}?h=120&fit=crop&auto=format`}
-                                        alt={article.title}
+                            <Card sx={{ width: 400, maxWidth: "100%" }}>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar aria-label="recipe">
+                                            <img alt={article.User.lastName} src={article.User.avatar}/>
+                                        </Avatar>
+                                    }
+                                    action={
+                                        <Link to={`/article/${article.id}`} style={{textDecoration:"none"}}>
+                                            <IconButton aria-label="settings">
+                                                <AddIcon color={"primary"} />
+                                            </IconButton>
+                                        </Link>
+                                    }
+                                    title={article.User.lastName}
+                                />
+                                <CardContent>
+                                    <CardMedia
+                                        component="img"
+                                        height="194"
+                                        image={article.img}
+                                        alt={article.img}
                                     />
-                                </AspectRatio>
-                                <Box sx={{ whiteSpace: 'nowrap', mx: 1 }}>
-                                    <Typography variant="h6">{article.title}</Typography>
-                                    <Typography variant="body2">{article.description}</Typography>
-                                </Box>
+                                    <Typography component="div" variant="h5" sx={{ color: 'text.secondary' }}>
+                                        {article.title}
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                        {article.shortDescription}
+                                    </Typography>
+                                    {article.Category && <Typography variant="body2" sx={{color: 'text.secondary'}}>
+                                        Categroy: {article.Category.key}
+                                    </Typography>}
+                                </CardContent>
                             </Card>
                         ))}
-                    </Carousel>
+                    </Grid>
 
                     <Categorys></Categorys>
                 </>
