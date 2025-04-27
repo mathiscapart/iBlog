@@ -21,6 +21,8 @@ export default function Header() {
                     <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/category"}>Category</NavLink>
                     { !user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
                               to={"/login"}>Login</NavLink> : <></>}
+                    { !user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
+                                       to={"/register"}>Register</NavLink> : <></>}
                     { user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
                               to={"/logout"}>Logout</NavLink> : <></>}
                     {user?.role ? <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/admin"}>Admin</NavLink> : <></>}

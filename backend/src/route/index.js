@@ -52,7 +52,6 @@ const userRouter = require('./userRoute');
 const articleRouter = require('./articleRoute');
 
 app.use('/user', userRouter);
-
 app.use(myToken)
 
 app.use('/article', articleRouter);

@@ -10,4 +10,5 @@ export interface Article{
     enable: boolean;
     User: User;
     Category: Category;
+    UpdateDate: Date;
 }

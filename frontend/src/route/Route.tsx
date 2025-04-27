@@ -7,6 +7,8 @@ import Logout from "../page/Logout.tsx";
 import Article from "../page/Article.tsx";
 import Articles from "../page/Articles.tsx";
 import Categorys from "../page/Categorys.tsx";
+import Register from "../page/Register.tsx";
+import Admin from "../page/Admin.tsx";
 
 
 const router = createBrowserRouter([
@@ -15,6 +17,10 @@ const router = createBrowserRouter([
         element: <MainDocument />,
         errorElement: <Error />,
         children: [
+            {
+                path: "/admin",
+                element: <Admin />
+            },
             {
                 path: "/articles",
                 element: <Articles />
@@ -37,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login />
+            },
+            {
+                path: "/register",
+                element: <Register />
             },
             {
                 path: "/home",
