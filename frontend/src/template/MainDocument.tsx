@@ -1,4 +1,4 @@
-import Header from "../componsent/Header.tsx";
+import Header from "../component/Header.tsx";
 import {Outlet} from "react-router-dom";
 
 function MainDocument(){

@@ -18,6 +18,7 @@ export default function Header() {
                     </Typography>
                     <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/home"}>Accueil</NavLink>
                     <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/articles"}>Articles</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/category"}>Category</NavLink>
                     { !user ? <NavLink className={({isActive}) => isActive ? "active navlink" : "navlink"}
                               to={"/login"}>Login</NavLink> : <></>}
                     { user ? <NavLink className={({isActive}) => isActive ? "active navlink" : "navlink"}

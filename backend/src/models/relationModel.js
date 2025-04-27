@@ -1,5 +1,3 @@
-const defineUser = require("./modelUser");
-
 async function relationModels(sequelize){
     const defineUser = require('./modelUser')
     const defineCategory = require('./modelCategory')
@@ -10,10 +8,20 @@ async function relationModels(sequelize){
     const Article = defineArticle(sequelize)
     const User = defineUser(sequelize)
 
-    User.hasMany(Article)
-    Article.belongsTo(User)
-    Category.hasMany(Article)
-    Article.belongsTo(Category)
+    User.hasMany(Article, {
+        foreignKey: 'UserId',
+        onDelete: 'CASCADE',
+    })
+    Article.belongsTo(User, {
+        foreignKey: 'UserId',
+    })
+    Category.hasMany(Article, {
+        foreignKey: 'CategoryId',
+        onDelete: 'CASCADE',
+    })
+    Article.belongsTo(Category, {
+        foreignKey: 'CategoryId',
+    })
 
     await sequelize.sync({alter: true})
 }
