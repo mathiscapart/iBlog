@@ -5,8 +5,14 @@
 
 .navlink{
     text-decoration: none;
+    color: #1976d2;
+    margin-left: 10px;
+    padding: 11px;
 }
 
 .navlink:hover{
-    color: black;
+    color: #084b8d;
+    border: 1px solid #084b8d;
+    padding: 10px;
+    border-radius: 10px;
 }

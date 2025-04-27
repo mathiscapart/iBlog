@@ -4,7 +4,16 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const article = await models.Article.findAll();
+    const article = await models.Article.findAll(
+        {
+            include: [
+                {
+                    model: models.Category,
+                    attributes: ['id', 'key', 'name', 'enable'] // si tu veux juste l'id et le name de la catégorie
+                }
+            ]
+        }
+    );
     res.status(200).json(article);
 });
 
@@ -19,20 +28,8 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const nbArticle = await models.Article.findAll({
-        where: {
-            ModelId: req.body['ModelId']
-        }
-    });
-
-    const nbModel = await models.Models.findByPk(req.body['ModelId']);
-
-    if (nbArticle.length > nbModel.dataValues['nbModel']){
-        res.status(200).end("Nomber of Model is insufficient");
-    }else{
-        await models.Article.create(req.body);
-        res.status(201).end('Article create successfully');
-    }
+    await models.Article.create(req.body);
+    res.status(201).end('Article create successfully');
 })
 
 router.put('/:id', async (req, res) => {

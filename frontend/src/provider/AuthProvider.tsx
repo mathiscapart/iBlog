@@ -1,33 +1,30 @@
-import {createContext, ReactNode, useState, useEffect, useContext} from "react";
-import {AuthContextType} from "../interface/AuthContext.tsx";
+import {useState, useEffect} from "react";
 import {User} from "../interface/User.tsx";
 import {jwtDecode} from "jwt-decode";
+import {AuthProviderProps} from "../interface/AuthProvider.tsx";
+import AuthContext, {authContextDefaultValues} from "../context/AuthContext.tsx";
 
-
-const AuthContext = createContext<AuthContextType>({
-    user: null,
-    login: () => {},
-    logout: () => {},
-});
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
+export function AuthProvider({ children }: AuthProviderProps) {
+    const [user, setUser] = useState<User | null>(authContextDefaultValues.user);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+        console.log("token", token);
         if (token) {
             try {
                 const decoded: User = jwtDecode(token);
                 setUser(decoded);
+                console.log(decoded);
             } catch (e) {
                 localStorage.removeItem('token');
             }
         }
     }, []);
 
-    const login = (user: User, token: string) => {
+    const login = (token: string) => {
         localStorage.setItem('token', token);
-        setUser(user); // Stocke l'objet user directement
+        const decoded: User = jwtDecode(token);
+        setUser(decoded);
     };
 
     const logout = () => {
@@ -41,6 +38,3 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         </AuthContext.Provider>
     );
 };
-
-
-export const useAuth = () => useContext(AuthContext);

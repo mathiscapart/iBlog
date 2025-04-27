@@ -4,8 +4,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {NavLink} from 'react-router-dom';
 import '../css/Header.css'
+import {useAuthContext} from "../context/AuthContext.tsx";
 
 export default function Header() {
+    const { user } = useAuthContext()
 
     return (
         <Box sx={{flexGrow: 1}} color={"white"}>
@@ -14,8 +16,13 @@ export default function Header() {
                     <Typography variant="h5" component="div" sx={{flexGrow: 4}}>
                         iBlog
                     </Typography>
-                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/"}>Accueil</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"}  to={"/admin"}>Admin</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/home"}>Accueil</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/articles"}>Articles</NavLink>
+                    { !user ? <NavLink className={({isActive}) => isActive ? "active navlink" : "navlink"}
+                              to={"/login"}>Login</NavLink> : <></>}
+                    { user ? <NavLink className={({isActive}) => isActive ? "active navlink" : "navlink"}
+                              to={"/logout"}>Logout</NavLink> : <></>}
+                    {user?.role ? <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/admin"}>Admin</NavLink> : <></>}
                 </Toolbar>
             </AppBar>
         </Box>

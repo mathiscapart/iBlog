@@ -25,7 +25,7 @@ app.post('/login', async (req, res) => {
     if (!isPasswordValid) return res.status(401).send('Mot de passe invalide');
 
     const token = jwt.sign(
-        { id: user.id, role: user.role },
+        { id: user.id, email: user.email, lastName: user.lastName, firstName: user.firstName, avatar: user.avatar , role: user.role },
         process.env.JWT_SECRET || 'supersecret123',
         { expiresIn: '1h' }
     );

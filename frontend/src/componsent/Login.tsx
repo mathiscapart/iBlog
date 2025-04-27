@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {useAuthContext} from "../context/AuthContext.tsx";
+import {Button, FormControl, TextField} from "@mui/material";
+import "../css/Login.css"
 
 
 const Login = () => {
-    const { login } = useAuth();
+    const { login } = useAuthContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -19,21 +21,14 @@ const Login = () => {
                 password,
             });
 
-            console.log("Données reçues du backend :", res.data);
-
             const token = res.data.token;
 
             if (!token || typeof token !== "string") {
-                console.error("Token invalide ou non fourni :", token);
                 alert("Erreur serveur : token manquant");
                 return;
             }
 
-            const userInfo = parseJwt(token);
-            console.log("Avant login → userInfo :", userInfo);
-            console.log("Avant login → token :", token);
-
-            login(userInfo, token);
+            login(token);
 
             navigate("/");
 
@@ -46,31 +41,30 @@ const Login = () => {
 
     return (
         <>
+            <h1>Connexion</h1>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Mot de passe"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Connexion</button>
+                <FormControl margin="dense">
+                    <TextField
+                        margin="dense"
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        label="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                        margin="dense"
+                        type="password"
+                        placeholder="Mot de passe"
+                        value={password}
+                        label="Mot de passe"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Button variant="contained" type="submit">Connexion</Button>
+                </FormControl>
             </form>
         </>
     );
 };
-
-function parseJwt(token: string) {
-    try {
-        return JSON.parse(atob(token.split(".")[1]));
-    } catch (e) {
-        return null;
-    }
-}
 
 export default Login;
