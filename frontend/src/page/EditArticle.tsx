@@ -164,6 +164,7 @@ export default function EditArticle(){
                     <InputLabel>Catégorie</InputLabel>
                     <Select
                         value={category}
+                        defaultValue={category}
                         onChange={(e) => setCategory(e.target.value as number)}
                         label="Catégorie"
                         required
