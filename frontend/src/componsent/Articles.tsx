@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Article } from "../interface/Article.tsx";
+import type { Article } from "../interface/Article.tsx";
 import fetchArticles from "../function/fetchArtciles.ts";
 import { Link } from "react-router-dom";
-import {Card, CardContent, CardHeader} from "@mui/material";
+import {Avatar, Card, CardContent, CardHeader} from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 function Articles() {
@@ -13,8 +13,6 @@ function Articles() {
         const fetchData = async () => {
             try {
                 const data = await fetchArticles();
-                console.log(data);
-                console.log("data", data[0].category.key);
                 setArticles(data);
             } catch (error) {
                 console.error("Erreur en récupérant les articles :", error);
@@ -32,11 +30,16 @@ function Articles() {
 
     return (
         <div>
-            {articles.map((article, index) => (
+            {articles.map((article: Article, index: number) => (
                 <div key={`${index} ${article.id}`} style={{marginLeft:"1%", marginRight:"1%"}}>
                     <Link to={`/article/${article.id}`} style={{textDecoration:"none"}}>
                         <Card sx={{ maxWidth: 345 }}>
                             <CardHeader
+                                avatar={
+                                    <Avatar aria-label="recipe">
+                                        <img src={article.User.avatar}/>
+                                    </Avatar>
+                                }
                                 title={article.title}
                             />
                             <CardContent>
@@ -44,7 +47,10 @@ function Articles() {
                                     {article.shortDescription}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                    {article.category.key}
+                                    {article.Category.key}
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    {article.User.lastName}
                                 </Typography>
                             </CardContent>
                         </Card>

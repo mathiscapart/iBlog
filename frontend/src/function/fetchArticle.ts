@@ -1,18 +1,18 @@
 import {Article} from "../interface/Article.tsx";
 import axios from "axios";
 
-async function fetchArtciles(): Promise<Article[]> {
+async function fetchArtciles(id: number): Promise<Article> {
     const token = localStorage.getItem('token');
     console.log(import.meta.env.VITE_URL)
 
-    const articles = await axios.get(`${import.meta.env.VITE_URL}article`, {
+    const article = await axios.get(`${import.meta.env.VITE_URL}article/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
-    console.log("article", articles);
+    console.log("articles", article);
 
-    return articles.data;
+    return article.data;
 }
 
 export default fetchArtciles;

@@ -9,7 +9,11 @@ router.get('/', async (req, res) => {
             include: [
                 {
                     model: models.Category,
-                    attributes: ['id', 'key', 'name', 'enable'] // si tu veux juste l'id et le name de la catégorie
+                    attributes: ['id', 'key', 'name', 'enable']
+                },
+                {
+                    model: models.User,
+                    attributes: ['id', 'lastName', 'firstName', 'email', 'avatar']
                 }
             ]
         }
@@ -19,7 +23,18 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const id = getIdParam(req);
-    const article = await models.Article.findByPk(id);
+    const article = await models.Article.findByPk(id, {
+        include: [
+            {
+                model: models.Category,
+                attributes: ['id', 'key', 'name', 'enable']
+            },
+            {
+                model: models.User,
+                attributes: ['id', 'lastName', 'firstName', 'email', 'avatar']
+            }
+        ]
+    });
     if (article) {
         res.status(200).json(article);
     } else {

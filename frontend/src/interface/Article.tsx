@@ -7,6 +7,6 @@ export interface Article{
     shortDescription: string;
     description: string;
     enable: boolean;
-    user: User;
-    category: Category;
+    User: User;
+    Category: Category;
 }

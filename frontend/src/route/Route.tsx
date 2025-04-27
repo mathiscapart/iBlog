@@ -5,6 +5,7 @@ import Login from "../componsent/Login.tsx";
 import Home from "../componsent/Home.tsx";
 import Logout from "../componsent/Logout.tsx";
 import Articles from "../componsent/Articles.tsx";
+import Article from "../componsent/Article.tsx";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 path: "/articles",
                 element: <Articles />
+            },
+            {
+                path: "/article/:articleId",
+                element: <Article />
             },
             {
                 path: "/login",
