@@ -27,7 +27,7 @@ const Login = () => {
                 alert("Erreur serveur : token manquant");
                 return;
             }
-
+            console.log(token);
             login(token);
 
             navigate("/home");

@@ -39,7 +39,7 @@ function Home(){
 
     return (
         <>
-            <img src="../../public/fond_Home.png" alt={"fond"} style={{width:'100%'}} />
+            <img src="/fond_Home.png" alt={"fond"} style={{width:'100%'}} />
             <div style={{display:'flex', justifyContent:'center', alignItems: 'center', flexDirection:"row", margin:"10%", marginTop: 30, marginBottom: 30}}>
                 <ArrowBackIosIcon color={"primary"} />
                 <ArrowBackIosIcon color={"primary"} />
@@ -55,7 +55,6 @@ function Home(){
                         <Typography variant={"h6"}>Bienvenue, {user.firstName} !</Typography>
                     </div>
 
-                    <Categorys></Categorys>
                     <Carousel
                         animation="slide"
                         indicators={true}
@@ -86,6 +85,8 @@ function Home(){
                             </Card>
                         ))}
                     </Carousel>
+
+                    <Categorys></Categorys>
                 </>
             ) : (
                 <p>Vous n'êtes pas connecté.</p>

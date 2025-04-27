@@ -9,6 +9,10 @@ import Box from "@mui/material/Box";
 export function CardCategory(CardCategoryProps: CardCategoryProps) {
     const navigate = useNavigate();
 
+    const editCategory = () =>  {
+        navigate(`/edit-category/${CardCategoryProps.category.id}`,);
+    }
+
     return(
         <div key={`${CardCategoryProps.index} ${CardCategoryProps.category.id}`} style={{marginLeft:"1%", marginRight:"1%"}}>
             <Card sx={{ marginTop: 5 }}>
@@ -19,7 +23,7 @@ export function CardCategory(CardCategoryProps: CardCategoryProps) {
                 {
                     CardCategoryProps.user?.role ?
                         <CardActions disableSpacing >
-                            <IconButton size={"large"} color={"secondary"} aria-label="modif category">
+                            <IconButton size={"large"} color={"secondary"} aria-label="modif category" onClick={editCategory}>
                                 <EditIcon color="primary" />
                             </IconButton>
                             <DeleteButton id={CardCategoryProps.category.id} path={"category"} afterDelete={CardCategoryProps.fetchData}></DeleteButton>

@@ -1,15 +1,20 @@
-import { useState} from "react";
-import {Box, Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import axios from "axios";
+import {Box, Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import {Category} from "../interface/Category.tsx";
+import ButtonBack from "../component/ButtonBack.tsx";
 
-export default function AddCategory() {
+export default function EditCategory(){
+    const params = useParams();
+    const id = params.id;
+    const [category, setCategory] = useState<Category>();
     const [name, setName] = useState<string>("");
     const [key, setKey] = useState<string>("");
     const [enable, setEnable] = useState<boolean>(false);
     const [successMessage, setSuccessMessage] = useState<boolean>(false);
     const token = localStorage.getItem('token');
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,7 +26,7 @@ export default function AddCategory() {
         };
 
         try {
-            await axios.post(`${import.meta.env.VITE_URL}category`, newCategory,{
+            await axios.put(`${import.meta.env.VITE_URL}category/${id}`, newCategory,{
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -39,21 +44,37 @@ export default function AddCategory() {
 
     };
 
+    const fetchData = async () => {
+        const data = await axios.get(`${import.meta.env.VITE_URL}category/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setCategory(data.data);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
+
         <Box sx={{ maxWidth: 600, margin: "auto", mt: 5 }}>
+            <ButtonBack></ButtonBack>
             {successMessage && (
                 <Typography color="success.main" variant="body1" sx={{ mb: 2 }}>
                     La catégorie a été ajouté avec succès !
                 </Typography>
             )}
             <Typography variant="h5" gutterBottom>
-                Ajouter une nouvelle catégorie
+                Modification de la catégorie {category?.name}
             </Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
                     fullWidth
                     label="Titre de catégorie"
-                    value={name}
+                    value={category?.name}
+                    placeholder={category?.name}
                     onChange={(e) => setName(e.target.value)}
                     margin="normal"
                     required
@@ -61,13 +82,14 @@ export default function AddCategory() {
                 <TextField
                     fullWidth
                     label="Key"
-                    value={key}
+                    value={category?.key}
+                    placeholder={category?.key}
                     onChange={(e) => setKey(e.target.value)}
                     margin="normal"
                     required
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={enable} onChange={() => setEnable(!enable)} />}
+                    control={<Checkbox checked={category?.enable} onChange={() => setEnable(!enable)} />}
                     label="Activer catégorie"
                 />
                 <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
@@ -75,5 +97,6 @@ export default function AddCategory() {
                 </Button>
             </form>
         </Box>
-    );
+    )
+
 }

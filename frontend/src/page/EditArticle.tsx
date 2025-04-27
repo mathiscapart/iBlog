@@ -1,43 +1,39 @@
 import {useEffect, useState} from "react";
-import {Category} from "../interface/Category.tsx";
-import {useAuthContext} from "../context/AuthContext.tsx";
-import fetchCategorys from "../function/fetchCategorys.ts";
-import {Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import {useParams} from "react-router-dom";
 import axios from "axios";
+import {
+    Box,
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField
+} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import {Article} from "../interface/Article.tsx";
+import ButtonBack from "../component/ButtonBack.tsx";
+import {useAuthContext} from "../context/AuthContext.tsx";
+import {Category} from "../interface/Category.tsx";
+import fetchCategorys from "../function/fetchCategorys.ts";
 
-export default function AddCard() {
+export default function EditArticle(){
+    const params = useParams();
+    const id = params.id;
     const { user } = useAuthContext()
     const [title, setTitle] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(true);
     const [description, setDescription] = useState<string>("");
     const [img, setImg] = useState<string>("");
     const [enable, setEnable] = useState<boolean>(false);
     const [shortDescription, setShortDescription] = useState<string>("");
     const [category, setCategory] = useState<number | null>();
     const [categorys, setCategorys] = useState<Category[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [article, setArticle] = useState<Article>();
     const [successMessage, setSuccessMessage] = useState<boolean>(false);
     const token = localStorage.getItem('token');
-
-
-    async function fetchData() {
-        try {
-            const data = await fetchCategorys();
-            setCategorys(data.filter(categorys => categorys.enable));
-        } catch (error) {
-            console.error("Erreur en récupérant les categorys :", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    if (isLoading) {
-        return <p>Chargement...</p>;
-    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,7 +49,7 @@ export default function AddCard() {
         };
 
         try {
-            await axios.post(`${import.meta.env.VITE_URL}article`, newArticle,{
+            await axios.put(`${import.meta.env.VITE_URL}article/${id}`, newArticle,{
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -64,30 +60,63 @@ export default function AddCard() {
             setDescription("");
             setEnable(false);
             setCategory(undefined);
+            setEnable(false);
         } catch (error: any) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Erreur serveur ou problème avec les données");
         }
 
-        console.log("Article à créer : ", newArticle);
+        console.log("Catégorie à créer : ", newArticle);
 
     };
 
+    async function fetchDataCategory() {
+        try {
+            const data = await fetchCategorys();
+            setCategorys(data.filter(categorys => categorys.enable));
+        } catch (error) {
+            console.error("Erreur en récupérant les categorys :", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchData = async () => {
+        const data = await axios.get(`${import.meta.env.VITE_URL}article/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setArticle(data.data);
+    }
+
+    useEffect(() => {
+        fetchData();
+        fetchDataCategory()
+    }, []);
+
+    if (isLoading) {
+        return <p>Chargement...</p>;
+    }
+
     return (
+
         <Box sx={{ maxWidth: 600, margin: "auto", mt: 5 }}>
+            <ButtonBack></ButtonBack>
             {successMessage && (
                 <Typography color="success.main" variant="body1" sx={{ mb: 2 }}>
-                    L'article a été ajouté avec succès !
+                    L'article a été modifié avec succès !
                 </Typography>
             )}
             <Typography variant="h5" gutterBottom>
-                Ajouter un nouvel article
+                Modification de l'article {article?.title}
             </Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
                     fullWidth
                     label="Titre de l'article"
-                    value={title}
+                    value={article?.title}
+                    placeholder={article?.title}
                     onChange={(e) => setTitle(e.target.value)}
                     margin="normal"
                     required
@@ -95,7 +124,8 @@ export default function AddCard() {
                 <TextField
                     fullWidth
                     label="Description courte"
-                    value={shortDescription}
+                    value={article?.shortDescription}
+                    placeholder={article?.shortDescription}
                     onChange={(e) => setShortDescription(e.target.value)}
                     margin="normal"
                     required
@@ -104,8 +134,9 @@ export default function AddCard() {
                     fullWidth
                     label="Description longue"
                     multiline
+                    placeholder={article?.description}
                     rows={4}
-                    value={description}
+                    value={article?.description}
                     onChange={(e) => setDescription(e.target.value)}
                     margin="normal"
                     required
@@ -113,7 +144,8 @@ export default function AddCard() {
                 <TextField
                     fullWidth
                     label="URL d'image"
-                    value={img}
+                    placeholder={article?.img}
+                    value={article?.img}
                     onChange={(e) => setImg(e.target.value)}
                     margin="normal"
                     required
@@ -121,7 +153,7 @@ export default function AddCard() {
                 <FormControl fullWidth margin="normal">
                     <InputLabel>Catégorie</InputLabel>
                     <Select
-                        value={category || ''}
+                        value={article?.Category.id}
                         onChange={(e) => setCategory(e.target.value as number)}
                         label="Catégorie"
                         required
@@ -134,13 +166,14 @@ export default function AddCard() {
                     </Select>
                 </FormControl>
                 <FormControlLabel
-                    control={<Checkbox checked={enable} onChange={() => setEnable(!enable)} />}
+                    control={<Checkbox checked={article?.enable} onChange={() => setEnable(!enable)} />}
                     label="Activer l'article"
                 />
                 <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-                    Ajouter l'article
+                    Modifier l'article
                 </Button>
             </form>
         </Box>
-    );
+    )
+
 }

@@ -9,6 +9,8 @@ import Articles from "../page/Articles.tsx";
 import Categorys from "../page/Categorys.tsx";
 import Register from "../page/Register.tsx";
 import Admin from "../page/Admin.tsx";
+import EditCategory from "../page/EditCategory.tsx";
+import EditArticle from "../page/EditArticle.tsx";
 
 
 const router = createBrowserRouter([
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
                 element: <Articles />
             },
             {
+                path: "/edit-article/:id",
+                element: <EditArticle />
+            },
+            {
                 path: "/article/:articleId",
                 element: <Article />
             },
@@ -38,7 +44,8 @@ const router = createBrowserRouter([
                 element: <Categorys />
             },
             {
-                path: "/category/:categoryId",
+                path: "/edit-category/:id",
+                element: <EditCategory />
             },
             {
                 path: "/login",

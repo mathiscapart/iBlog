@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,6 +7,12 @@ import AddIcon from '@mui/icons-material/Add';
 import CardArticleProps from "../interface/CardArticle.tsx";
 
 export function CardArticle({ index, article, user, fetchData }: CardArticleProps) {
+    const navigate = useNavigate();
+
+    const editArticle = () =>  {
+        navigate(`/edit-article/${article.id}`,);
+    }
+
     return(
         <div key={`${index} ${article.id}`} style={{marginLeft:"1%", marginRight:"1%"}}>
             <Card sx={{ width: 400, maxWidth: "100%" }}>
@@ -45,7 +51,7 @@ export function CardArticle({ index, article, user, fetchData }: CardArticleProp
                 {
                     user?.role ?
                         <CardActions disableSpacing >
-                            <IconButton size={"large"} color={"secondary"} aria-label="modif article">
+                            <IconButton size={"large"} color={"secondary"} aria-label="modif article" onClick={editArticle}>
                                 <EditIcon color="primary" />
                             </IconButton>
                             <DeleteButton id={article.id} path={"article"} afterDelete={fetchData}></DeleteButton>
