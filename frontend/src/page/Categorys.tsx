@@ -14,7 +14,7 @@ function Categorys() {
     async function fetchData() {
         try {
             const data = await fetchCategorys();
-            setCategorys(data.filter(categorys => categorys.enable));
+            user?.role ? setCategorys(data):  setCategorys(data.filter(category => category.enable)) ;
         } catch (error) {
             console.error("Erreur en récupérant les categorys :", error);
         } finally {

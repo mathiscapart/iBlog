@@ -14,7 +14,7 @@ function CardArticles({filter, category}: {filter: string, category: string}) {
     async function fetchData() {
         try {
             const data = await fetchArticles();
-            setArticles(data);
+            user?.role ? setArticles(data):  setArticles(data.filter(article => article.enable)) ;
         } catch (error) {
             console.error("Erreur en récupérant les articles :", error);
         } finally {

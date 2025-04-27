@@ -51,6 +51,13 @@ export default function EditCategory(){
             }
         })
         setCategory(data.data);
+        setData(data.data);
+    }
+
+    const setData = (data: Category) => {
+        setName(data.name);
+        setKey(data.key);
+        setEnable(data.enable);
     }
 
     useEffect(() => {
@@ -58,12 +65,11 @@ export default function EditCategory(){
     }, []);
 
     return (
-
         <Box sx={{ maxWidth: 600, margin: "auto", mt: 5 }}>
             <ButtonBack></ButtonBack>
             {successMessage && (
                 <Typography color="success.main" variant="body1" sx={{ mb: 2 }}>
-                    La catégorie a été ajouté avec succès !
+                    La catégorie a été modifié avec succès !
                 </Typography>
             )}
             <Typography variant="h5" gutterBottom>
@@ -73,7 +79,7 @@ export default function EditCategory(){
                 <TextField
                     fullWidth
                     label="Titre de catégorie"
-                    value={category?.name}
+                    value={name}
                     placeholder={category?.name}
                     onChange={(e) => setName(e.target.value)}
                     margin="normal"
@@ -82,18 +88,18 @@ export default function EditCategory(){
                 <TextField
                     fullWidth
                     label="Key"
-                    value={category?.key}
+                    value={key}
                     placeholder={category?.key}
                     onChange={(e) => setKey(e.target.value)}
                     margin="normal"
                     required
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={category?.enable} onChange={() => setEnable(!enable)} />}
+                    control={<Checkbox checked={enable} onChange={() => setEnable(!enable)} />}
                     label="Activer catégorie"
                 />
                 <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-                    Ajouter la catégorie
+                    Modifier la catégorie
                 </Button>
             </form>
         </Box>

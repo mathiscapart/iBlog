@@ -88,6 +88,16 @@ export default function EditArticle(){
             }
         })
         setArticle(data.data);
+        setData(data.data)
+    }
+
+    const setData = (data: Article) => {
+        setTitle(data.title);
+        setShortDescription(data.shortDescription);
+        setDescription(data.description);
+        setImg(data.img);
+        setEnable(data.enable);
+        setCategory(data.Category.id);
     }
 
     useEffect(() => {
@@ -115,7 +125,7 @@ export default function EditArticle(){
                 <TextField
                     fullWidth
                     label="Titre de l'article"
-                    value={article?.title}
+                    value={title}
                     placeholder={article?.title}
                     onChange={(e) => setTitle(e.target.value)}
                     margin="normal"
@@ -124,7 +134,7 @@ export default function EditArticle(){
                 <TextField
                     fullWidth
                     label="Description courte"
-                    value={article?.shortDescription}
+                    value={shortDescription}
                     placeholder={article?.shortDescription}
                     onChange={(e) => setShortDescription(e.target.value)}
                     margin="normal"
@@ -134,7 +144,7 @@ export default function EditArticle(){
                     fullWidth
                     label="Description longue"
                     multiline
-                    placeholder={article?.description}
+                    placeholder={description}
                     rows={4}
                     value={article?.description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -144,7 +154,7 @@ export default function EditArticle(){
                 <TextField
                     fullWidth
                     label="URL d'image"
-                    placeholder={article?.img}
+                    placeholder={img}
                     value={article?.img}
                     onChange={(e) => setImg(e.target.value)}
                     margin="normal"
@@ -153,7 +163,7 @@ export default function EditArticle(){
                 <FormControl fullWidth margin="normal">
                     <InputLabel>Catégorie</InputLabel>
                     <Select
-                        value={article?.Category.id}
+                        value={category}
                         onChange={(e) => setCategory(e.target.value as number)}
                         label="Catégorie"
                         required
@@ -166,7 +176,7 @@ export default function EditArticle(){
                     </Select>
                 </FormControl>
                 <FormControlLabel
-                    control={<Checkbox checked={article?.enable} onChange={() => setEnable(!enable)} />}
+                    control={<Checkbox checked={enable} onChange={() => setEnable(!enable)} />}
                     label="Activer l'article"
                 />
                 <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
