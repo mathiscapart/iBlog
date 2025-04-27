@@ -5,6 +5,5 @@ export default interface CardArticleProps {
     index: number;
     category: Category;
     user: User | null;
-    fetchData: () => Promise<void>;
-    onClick: (value: string) => void
+    fetchData: () => Promise<void>
 }

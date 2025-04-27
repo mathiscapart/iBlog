@@ -4,8 +4,9 @@ import fetchArticles from "../function/fetchArtciles.ts";
 import { Grid } from "@mui/material";
 import {useAuthContext} from "../context/AuthContext.tsx";
 import {CardArticle} from "./CardArticle.tsx";
+import Typography from "@mui/material/Typography";
 
-function CardArticles({filter}: {filter: string}) {
+function CardArticles({filter, category}: {filter: string, category: string}) {
     const [articles, setArticles] = useState<Article[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuthContext()
@@ -31,12 +32,13 @@ function CardArticles({filter}: {filter: string}) {
 
     return (
         <div>
-            <Grid container style={{marginLeft:"10%", marginRight:"10%"}} rowSpacing={4} columnSpacing={{ xs: 2, sm: 2, md: 3 }} direction="row"
+            <Typography variant={"h3"} color={"primary"} style={{marginBottom: 30}}>Articles</Typography>
+            <Grid container style={{marginLeft:"10%", marginRight:"10%"}} rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }} direction="row"
                   sx={{
                       justifyContent: "space-between",
                       alignItems: "center",}}
             >
-            {articles.filter((article) => article.title.includes(filter) || article.Category.key.includes(filter)).map((article: Article, index: number) => (
+            {articles.filter((article) => article.Category.name.includes(category)).filter((article) => article.title.includes(filter)).map((article: Article, index: number) => (
                 <CardArticle index={index} article={article} user={user} fetchData={fetchData}></CardArticle>
             ))}
             </Grid>

@@ -5,8 +5,9 @@ import Login from "../page/Login.tsx";
 import Home from "../page/Home.tsx";
 import Logout from "../page/Logout.tsx";
 import Article from "../page/Article.tsx";
+import Articles from "../page/Articles.tsx";
+import Categorys from "../page/Categorys.tsx";
 
-// const [filter, setFilter] = useState("");
 
 const router = createBrowserRouter([
     {
@@ -14,25 +15,25 @@ const router = createBrowserRouter([
         element: <MainDocument />,
         errorElement: <Error />,
         children: [
-            /*{
+            {
                 path: "/articles",
-                element: <Articles filter={filter}/>
-            },*/
+                element: <Articles />
+            },
+            {
+                path: "/articles/:categoryName",
+                element: <Articles />
+            },
             {
                 path: "/article/:articleId",
                 element: <Article />
             },
-            /*{
+            {
                 path: "/category",
-                element: <Categorys onClick={(e) => setFilter(e)} />
-            },*/
+                element: <Categorys />
+            },
             {
                 path: "/category/:categoryId",
             },
-            /*{
-                path: "/category/:articleId",
-                element: <Category />
-            },*/
             {
                 path: "/login",
                 element: <Login />

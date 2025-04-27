@@ -23,7 +23,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function Search({ onChanged }: SearchInterface) {
     return (
         <>
-            <div style={{position: 'relative', width: '100%', backgroundColor: '#1976d2', height: '20em', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: "column", marginBottom: 60}}>
+            <div style={{position: 'relative', width: '100%', backgroundColor: '#1976d2', height: '20em', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: "column", marginBottom: 10}}>
                 <Typography variant="h3" sx={{ color: 'white', fontWeight: 'bold' }}>
                     iBlog
                 </Typography>

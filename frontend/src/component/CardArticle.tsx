@@ -6,49 +6,49 @@ import DeleteButton from "./DeleteButton.tsx";
 import AddIcon from '@mui/icons-material/Add';
 import CardArticleProps from "../interface/CardArticle.tsx";
 
-export function CardArticle(CardArticleProps: CardArticleProps) {
+export function CardArticle({ index, article, user, fetchData }: CardArticleProps) {
     return(
-        <div key={`${CardArticleProps.index} ${CardArticleProps.article.id}`} style={{marginLeft:"1%", marginRight:"1%"}}>
-            <Card sx={{ maxWidth: 345 }}>
+        <div key={`${index} ${article.id}`} style={{marginLeft:"1%", marginRight:"1%"}}>
+            <Card sx={{ width: 400, maxWidth: "100%" }}>
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe">
-                            <img alt={CardArticleProps.article.User.lastName} src={CardArticleProps.article.User.avatar}/>
+                            <img alt={article.User.lastName} src={article.User.avatar}/>
                         </Avatar>
                     }
                     action={
-                        <Link to={`/article/${CardArticleProps.article.id}`} style={{textDecoration:"none"}}>
+                        <Link to={`/article/${article.id}`} style={{textDecoration:"none"}}>
                             <IconButton aria-label="settings">
                                 <AddIcon color={"primary"} />
                             </IconButton>
                         </Link>
                     }
-                    title={CardArticleProps.article.title}
+                    title={article.User.lastName}
                 />
                 <CardContent>
                     <CardMedia
                         component="img"
                         height="194"
-                        image={CardArticleProps.article.img}
-                        alt={CardArticleProps.article.img}
+                        image={article.img}
+                        alt={article.img}
                     />
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {CardArticleProps.article.shortDescription}
+                    <Typography component="div" variant="h5" sx={{ color: 'text.secondary' }}>
+                        {article.title}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {CardArticleProps.article.Category.key}
+                        {article.shortDescription}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {CardArticleProps.article.User.lastName}
-                    </Typography>
+                    {article.Category && <Typography variant="body2" sx={{color: 'text.secondary'}}>
+                        Categroy: {article.Category.key}
+                    </Typography>}
                 </CardContent>
                 {
-                    CardArticleProps.user?.role ?
+                    user?.role ?
                         <CardActions disableSpacing >
                             <IconButton size={"large"} color={"secondary"} aria-label="modif article">
                                 <EditIcon color="primary" />
                             </IconButton>
-                            <DeleteButton id={CardArticleProps.article.id} path={"article"} afterDelete={CardArticleProps.fetchData}></DeleteButton>
+                            <DeleteButton id={article.id} path={"article"} afterDelete={fetchData}></DeleteButton>
                         </CardActions> : null
                 }
             </Card>

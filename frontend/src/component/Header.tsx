@@ -16,14 +16,14 @@ export default function Header() {
                     <Typography variant="h5" component="div" sx={{flexGrow: 4}}>
                         iBlog
                     </Typography>
-                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/home"}>Accueil</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/articles"}>Articles</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/category"}>Category</NavLink>
-                    { !user ? <NavLink className={({isActive}) => isActive ? "active navlink" : "navlink"}
+                    <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/home"}>Accueil</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/articles"}>Articles</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/category"}>Category</NavLink>
+                    { !user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
                               to={"/login"}>Login</NavLink> : <></>}
-                    { user ? <NavLink className={({isActive}) => isActive ? "active navlink" : "navlink"}
+                    { user ? <NavLink className={({isActive}) => isActive ? "active" : "navlink"}
                               to={"/logout"}>Logout</NavLink> : <></>}
-                    {user?.role ? <NavLink className={({ isActive }) => isActive ? "active navlink": "navlink"} to={"/admin"}>Admin</NavLink> : <></>}
+                    {user?.role ? <NavLink className={({ isActive }) => isActive ? "active": "navlink"} to={"/admin"}>Admin</NavLink> : <></>}
                 </Toolbar>
             </AppBar>
         </Box>

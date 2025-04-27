@@ -30,7 +30,7 @@ const Login = () => {
 
             login(token);
 
-            navigate("/");
+            navigate("/home");
 
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         } catch (error: any) {
