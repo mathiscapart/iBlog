@@ -10,15 +10,13 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - run: corepack enable && corepack prepare yarn@stable --activate
 
       - run: yarn install
