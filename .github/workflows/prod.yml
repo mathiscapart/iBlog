@@ -9,7 +9,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: runner
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,14 +18,14 @@ jobs:
       - run: corepack enable && corepack prepare yarn@stable --activate
 
   install:
-    runs-on: runner
+    runs-on: self-hosted
     steps:
       - run: npm install
         working-directory: backend
       - run: yarn install
         working-directory: frontend
   linter:
-    runs-on: runner
+    runs-on: self-hosted
     steps:
       - run: npm run lint
         working-directory: backend
