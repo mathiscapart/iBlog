@@ -14,8 +14,12 @@ function CardArticles({filter, category}: {filter: string, category: string}) {
     async function fetchData() {
         try {
             const data = await fetchArticles();
-            user?.role ? setArticles(data):  setArticles(data.filter(article => article.enable)) ;
-        } catch (error) {
+            if (user?.role) {
+                setArticles(data);
+            } else {
+                setArticles(data.filter(category => category.enable));
+            }
+        } catch (error: unknown) {
             console.error("Erreur en récupérant les articles :", error);
         } finally {
             setIsLoading(false);
@@ -24,7 +28,7 @@ function CardArticles({filter, category}: {filter: string, category: string}) {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     if (isLoading) {
         return <p>Chargement...</p>;

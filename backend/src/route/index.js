@@ -43,6 +43,7 @@ const myToken = function (req, res, next) {
         req.user = jwt.verify(token, process.env.JWT_SECRET || 'supersecret123');
         next();
     } catch (err) {
+        console.log(err);
         return res.status(401).send('Token non valide');
     }
 };

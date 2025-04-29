@@ -33,7 +33,7 @@ const Login = () => {
             navigate("/home");
 
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Identifiants invalides ou erreur serveur");
         }

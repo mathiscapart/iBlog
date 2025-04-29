@@ -64,7 +64,7 @@ export default function AddCard() {
             setDescription("");
             setEnable(false);
             setCategory(undefined);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Erreur serveur ou problème avec les données");
         }

@@ -14,7 +14,11 @@ function Categorys() {
     async function fetchData() {
         try {
             const data = await fetchCategorys();
-            user?.role ? setCategorys(data):  setCategorys(data.filter(category => category.enable)) ;
+            if (user?.role) {
+                setCategorys(data);
+            } else {
+                setCategorys(data.filter(category => category.enable));
+            }
         } catch (error) {
             console.error("Erreur en récupérant les categorys :", error);
         } finally {
@@ -24,7 +28,7 @@ function Categorys() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     if (isLoading) {
         return <p>Chargement...</p>;

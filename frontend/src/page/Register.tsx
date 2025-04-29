@@ -35,7 +35,7 @@ const Register = () => {
             };
             await axios.post(`${import.meta.env.VITE_URL}user`, userData);
             navigate("/home");
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Erreur serveur ou problème avec les données");
         }

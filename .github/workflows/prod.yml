@@ -2,16 +2,33 @@ name: "Mise en production"
 on:
   pull_request:
     branches:
-      - ${{ github.event.repository.default_branch }}
+      - main
   push:
     branches:
-      - ${{ github.event.repository.default_branch }}
+      - main
 
 jobs:
-  linter:
+  prepare:
     runs-on: runner
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 10.9.2
+          node-version: 22
+      - run: corepack enable && corepack prepare yarn@stable --activate
+
+  install:
+    runs-on: runner
+    steps:
+      - run: npm install
+        working-directory: backend
+      - run: yarn install
+        working-directory: frontend
+  linter:
+    runs-on: runner
+    steps:
+      - run: npm run lint
+        working-directory: backend
+      - run: yarn lint
+        working-directory: frontend
+

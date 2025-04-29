@@ -15,8 +15,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 const decoded: User = jwtDecode(token);
                 setUser(decoded);
                 console.log(decoded);
-            } catch (e) {
+            } catch (error: unknown) {
                 localStorage.removeItem('token');
+                console.error("Erreur dans handleSubmit :", error);
             }
         }
     }, []);
@@ -37,4 +38,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
             {children}
         </AuthContext.Provider>
     );
-};
+}

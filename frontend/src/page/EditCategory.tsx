@@ -35,7 +35,7 @@ export default function EditCategory(){
             setName("");
             setKey("");
             setEnable(false);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Erreur serveur ou problème avec les données");
         }
@@ -62,7 +62,7 @@ export default function EditCategory(){
 
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     return (
         <Box sx={{ maxWidth: 600, margin: "auto", mt: 5 }}>

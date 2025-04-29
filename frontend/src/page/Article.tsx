@@ -27,7 +27,7 @@ function Article() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     if (isLoading) {
         return <p>Chargement...</p>;

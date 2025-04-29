@@ -61,7 +61,7 @@ export default function EditArticle(){
             setEnable(false);
             setCategory(undefined);
             setEnable(false);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Erreur serveur ou problème avec les données");
         }
@@ -103,7 +103,7 @@ export default function EditArticle(){
     useEffect(() => {
         fetchData();
         fetchDataCategory()
-    }, []);
+    });
 
     if (isLoading) {
         return <p>Chargement...</p>;

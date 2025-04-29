@@ -1,23 +1,20 @@
-import js from "@eslint/js";
-import globals from "globals";
-import pluginReact from "eslint-plugin-react";
-import json from "@eslint/json";
-import markdown from "@eslint/markdown";
 import { defineConfig } from "eslint/config";
-
+import globals from "globals";
+import js from "@eslint/js";
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,jsx}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  { files: ["**/*.{js,mjs,cjs,jsx}"], languageOptions: { globals: {...globals.browser, ...globals.node} } },
-  pluginReact.configs.flat.recommended,
-  { files: ["**/*.json"], plugins: { json }, language: "json/json", extends: ["json/recommended"] },
-  { files: ["**/*.jsonc"], plugins: { json }, language: "json/jsonc", extends: ["json/recommended"] },
-  { files: ["**/*.md"], plugins: { markdown }, language: "markdown/commonmark", extends: ["markdown/recommended"] },
   {
-    rules: {
-      "no-unused-vars": "warn",
-      "no-undef": "warn",
+    files: ["**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      },
+      sourceType: "script",
+      ecmaVersion: 2021
     },
-  },
+    plugins: {
+      js
+    },
+    extends: [js.configs.recommended]
+  }
 ]);

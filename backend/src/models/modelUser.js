@@ -36,11 +36,11 @@ module.exports = (sequelize) => {
         alter: true,
         paranoid: true,
         hooks: {
-            async beforeCreate(attributes, _) {
+            async beforeCreate(attributes, ) {
                 const salt = await bcrypt.genSalt(10);
                 attributes.dataValues.password = await bcrypt.hash(attributes.dataValues.password, salt);
             },
-            async beforeUpdate(instance, _) {
+            async beforeUpdate(instance, ) {
                 const salt = await bcrypt.genSalt(10);
                 instance.dataValues.password = await bcrypt.hash(instance.dataValues.password, salt);
             }

@@ -30,7 +30,7 @@ export default function AddCategory() {
             setName("");
             setKey("");
             setEnable(false);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Erreur dans handleSubmit :", error);
             alert("Erreur serveur ou problème avec les données");
         }
